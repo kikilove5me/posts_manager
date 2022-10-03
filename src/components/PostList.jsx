@@ -4,6 +4,13 @@ import PostItem from './PostItem'
 
 //becouse props is obj -> deconstruction {props}
 export const PostList = ({ posts, title, remove }) => {
+
+    if (!posts.length) {
+        return (<h1 style={{ textAlign: 'center' }}>
+            post's not found!
+        </h1>)
+    }
+
     return (
         <div>
             <h1 style={{ textAlign: 'center' }}>

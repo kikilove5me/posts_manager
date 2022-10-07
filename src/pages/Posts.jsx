@@ -14,6 +14,7 @@ import '../styles/App.css';
 import { useFetching } from "../hooks/useFetching";
 import { getPageCount, getPagesArray } from "../utils/pages";
 import { useObserver } from "../hooks/useObserver";
+import { MySelect } from "../components/UI/select/MySelect";
 
 
 
@@ -51,7 +52,7 @@ export function Posts() {
     //if is empty it will be called once
     useEffect(() => {
         fetchPosts(limit, page);
-    }, [page]);
+    }, [page, limit]);
 
     const createPost = (newPost) => {
         setPosts([...posts, newPost]);
@@ -84,14 +85,26 @@ export function Posts() {
             {/* filter drop-down and search bar */}
             <PostFilter
                 filter={filter}
-                setFilter={setFilter} />
+                setFilter={setFilter}
+            />
+
+            <MySelect
+                value={limit}
+                onChange={value => setLimit(value)}
+                defaultValue={"number of elements"}
+                options={[
+                    { value: 5, name: '5' },
+                    { value: 10, name: '10' },
+                    { value: -1, name: 'all' },
+                ]}
+            />
 
             <hr style={{ margin: '15px 0' }} />
             {error && <h1>error by Loading!</h1>}
 
             <PostList remove={removePost} posts={sortedAndSearchedPosts} title="list of Posts 1" />
-            <div ref={lastElement} style={{ height: 20, background: 'red' }} />
-            {isPostsLoading && <div style={{ display: "flex", justifyContent: "center", marginTop: 50 }}> < Loader /> </div>};
+            <div ref={lastElement} style={{ height: 20, background: 'white' }} />
+            {isPostsLoading && <div style={{ display: "flex", justifyContent: "center", marginTop: 50 }}> < Loader /> </div>}
 
             <Pagination
                 page={page}
